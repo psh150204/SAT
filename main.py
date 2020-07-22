@@ -4,11 +4,28 @@ import time
 
 from dataloader import get_data_loader
 from utils import seq2sen
+from model import Encoder, Decoder
 
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import sys
+
+class Logger(object):
+    def __init__(self):
+        self.terminal = sys.stdout
+        self.log = open("results/log.txt", "w")
+
+    def write(self, message):
+        self.terminal.write(message)
+        self.log.write(message)  
+
+    def flush(self):
+        #this flush method is needed for python 3 compatibility.
+        #this handles the flush command by doing nothing.
+        #you might want to specify some extra behavior here.
+        pass
 
 def save_checkpoint(model, path):
     model_state = {
@@ -19,10 +36,19 @@ def save_checkpoint(model, path):
     print('A check point has been generated : ' + path)
 
 def main(args):
+    # constant definition
     sos_idx = 0
     eos_idx = 1
     pad_idx = 2
+    a_dim = 512
+    h_dim = 512
+    attn_dim = 512
+    embed_dim = 512
+    regularize_constant = 1. # lambda * L
 
+    vocabulary = torch.load(args.voca_path)
+    vocab_size = len(vocabulary)
+    
     device = torch.device("cuda" if(torch.cuda.is_available()) else "cpu")
 
     if not args.test:
@@ -30,8 +56,11 @@ def main(args):
         train_loader = get_data_loader(args.path, 'train', args.token_path, args.voca_path, args.batch_size, pad_idx)
         valid_loader = get_data_loader(args.path, 'valid', args.token_path, args.voca_path, args.batch_size, pad_idx)
 
+        encoder = Encoder().to(device)
+        decoder = Decoder(a_dim, h_dim, attn_dim, vocab_size, embed_dim).to(device)
+
         criterion = nn.CrossEntropyLoss(ignore_index = pad_idx)
-        optimizer = None
+        optimizer = torch.optim.Adam(decoder.parameters(), lr = 0.0001)
 
         print('Start training ...')
         for epoch in range(args.epochs):
@@ -41,18 +70,21 @@ def main(args):
             for src_batch, tgt_batch in train_loader:
                 batch_start = time.time()
 
-                src_batch = torch.tensor(src_batch).to(device)
+                src_batch = src_batch.to(device)
                 trg_batch = torch.tensor(tgt_batch).to(device)
                 
                 trg_input = trg_batch[:,:-1] 
                 trg_output = trg_batch[:,1:].contiguous().view(-1)
                 
-                h = listener(src_batch)
-                preds = speller(trg_input, h)
+                a = encoder(src_batch)
+                preds, alphas = decoder(a, trg_input) # [batch, C, vocab_size], [batch, C, L]
 
                 optimizer.zero_grad()
 
-                loss = criterion(preds.view(-1, preds.size(-1)), trg_output)
+                loss = criterion(preds.view(-1, preds.size(-1)), trg_output) # NLL loss
+                regularize_term = regularize_constant * ((1. - torch.sum(alphas, dim = 1)) ** 2).mean()
+                
+                loss += regularize_term
                 loss.backward()
 
                 optimizer.step()
@@ -69,10 +101,10 @@ def main(args):
             epoch_time = time.time() - start_epoch
             print('Time taken for %d epoch : %.2fs'%(epoch+1, epoch_time))
 
-            save_checkpoint(listener, 'checkpoints/epoch_%d_'%(epoch+1))
+            save_checkpoint(decoder, 'checkpoints/epoch_%d_'%(epoch+1))
 
         print('End of the training')
-        save_checkpoint(listener, 'checkpoints/final')
+        save_checkpoint(decoder, 'checkpoints/final')
     else:
         if os.path.exists(args.checkpoint):
             model_checkpoint = torch.load(args.checkpoint)
@@ -178,9 +210,10 @@ if __name__ == '__main__':
     parser.add_argument(
         '--checkpoint',
         type=str,
-        default='checkpoint/final'
+        default='checkpoints/final'
     )
 
     args = parser.parse_args()
+    sys.stdout = Logger()
 
     main(args)

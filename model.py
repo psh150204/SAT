@@ -1,5 +1,7 @@
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
+
 from torchvision.models import vgg19
 
 
@@ -59,16 +61,16 @@ class Decoder(nn.Module):
         pred, alpha = None, None
 
         h_t, c_t = self.f_init_h(torch.mean(a, dim = 1)), self.f_init_c(torch.mean(a, dim = 1))
-        z_t = self.attention(a, h_t) # [batch, a_dim]
+        z_t, _ = self.attention(a, h_t) # [batch, a_dim]
         y_t = trg[:,0:1] # [batch, 1]
 
         for t in range(max_caption_len):
             # main procedure
             Ey_t = self.embedding(y_t) # [batch, 1, embed_dim]
-            beta = F.sigmoid(self.f_beta(h_t)) # [batch, h_dim] -> [batch, a_dim]
+            beta = torch.sigmoid(self.f_beta(h_t)) # [batch, h_dim] -> [batch, a_dim]
             
-            lstm_input = torch.cat([Ey_t, z_t.unsqueeze(1)], dim = -1) # [batch, 1, a_dim + embed_dim]
-            h_t, c_t = self.LSTM(lstm_input, (h_t, c_t)) # [batch, 1, h_dim], [batch, 1, h_dim]
+            lstm_input = torch.cat([Ey_t.squeeze(1), z_t], dim = -1) # [batch, a_dim + embed_dim]
+            h_t, c_t = self.LSTM(lstm_input, (h_t, c_t)) # [batch, h_dim], [batch, h_dim]
             z_t, alpha_t = self.attention(a, h_t) # [batch, a_dim], [batch, L]
 
             # doubly stochastic attention
