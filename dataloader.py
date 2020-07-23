@@ -23,11 +23,10 @@ class Flickr8k_Dataset(torch.utils.data.Dataset):
 
     def __getitem__(self, idx):
         idx_type = str(type(idx))
-        caption_idx = np.random.randint(5)
         if idx_type == "<class 'int'>":
             image, _, path = self.data[idx] # image : [3, 224, 224]
             x = image # [3, 244, 244]
-            y = [sen2seq(self.voca, x[1:], 0, 1) for x in self.trg if path.split('/')[3] in x[0]]
+            y = [sen2seq(self.voca, x[1:]) for x in self.trg if path.split('/')[3] in x[0]]
 
         elif idx_type == "<class 'slice'>":
             x, y = None, None
