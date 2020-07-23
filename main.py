@@ -46,6 +46,9 @@ def main(args):
     attn_dim = 512
     embed_dim = 512
     regularize_constant = 1. # lambda * L => lambda = 1/L
+    
+    validation_term = 1
+    best_bleu = 0.
 
     vocabulary = torch.load(args.voca_path)
     vocab_size = len(vocabulary)
@@ -70,11 +73,14 @@ def main(args):
             start_epoch = time.time()
             i = 0
 
-            for src_batch, tgt_batch in train_loader:
+            ############################################################################################################################################
+            # training
+            decoder.train()
+            for src_batch, trg_batch in train_loader:
                 batch_start = time.time()
 
                 src_batch = src_batch.to(device)
-                trg_batch = torch.tensor(tgt_batch).to(device)
+                trg_batch = torch.tensor(trg_batch).to(device)
                 
                 trg_input = trg_batch[:,:-1] 
                 trg_output = trg_batch[:,1:].contiguous().view(-1)
@@ -104,15 +110,87 @@ def main(args):
             epoch_time = time.time() - start_epoch
             print('Time taken for %d epoch : %.2fs'%(epoch+1, epoch_time))
 
-            save_checkpoint(decoder, 'checkpoints/epoch_%d'%(epoch+1))
+            ############################################################################################################################################
+            # validation
+            if i % validation_term == 0:
+                decoder.eval()
+                j = 0
+                pred, ref = [], []
 
+                for src_batch, trg_batch in valid_loader:
+
+                    start = time.time()
+
+                    src_batch = src_batch.to(device) # [batch, 3, 244, 244]
+                    trg_batch = torch.tensor(trg_batch).to(device) # [batch * 5, C]
+                    trg_batch = torch.split(trg_batch, 5)
+                    
+                    batches = []
+                    for i in range(args.batch_size):
+                        batches.append(trg_batch[i].unsqueeze(0))
+                    
+                    trg_batch = torch.cat(batches, dim = 0) # [batch, 5, C]
+                    
+                    max_length = trg_batch.size(-1)
+                    
+                    pred_batch = torch.zeros(args.batch_size, 1, dtype = int).to(device) # [batch, 1] = [[0],[0],...,[0]]
+                    
+                    # eos_mask[i] = 1 means i-th sentence has eos
+                    eos_mask = torch.zeros(args.batch_size, dtype = int)
+                    
+                    a = encoder(src_batch)
+                    
+                    for k in range(max_length):
+                        
+                        output, _ = decoder(a, pred_batch) # [batch, k+1, vocab_size]
+
+                        # greedy search
+                        output = torch.argmax(F.softmax(output, dim = -1), dim = -1) # [batch_size, k+1]
+                        predictions = output[:,-1].unsqueeze(1)
+                        pred_batch = torch.cat([pred_batch, predictions], dim = -1)
+
+                        for i in range(args.batch_size):
+                            if predictions[i] == eos_idx:
+                                eos_mask[i] = 1
+
+                        # every sentence has eos
+                        if eos_mask.sum() == args.batch_size :
+                            break
+                            
+                    # flush the GPU cache
+                    if torch.cuda.is_available():
+                        torch.cuda.empty_cache()
+
+                    pred += seq2sen(pred_batch.cpu().numpy().tolist(), vocabulary)
+                    for i in range(args.batch_size):
+                        ref += [seq2sen(trg_batch[i].cpu().numpy().tolist(), vocabulary)]
+                    
+                    t = time.time() - start
+                    j += 1
+                    print("[%d/%d] prediction done | time : %.2fs"%(j, valid_loader.size // args.batch_size + 1, t))
+
+                bleu_1 = corpus_bleu(ref, pred, weights = (1./1.,)) * 100
+                bleu_2 = corpus_bleu(ref, pred, weights = (1./2., 1./2.,)) * 100
+                bleu_3 = corpus_bleu(ref, pred, weights = (1./3., 1./3., 1./3.,)) * 100
+                bleu_4 = corpus_bleu(ref, pred, weights = (1./4., 1./4., 1./4., 1./4.,)) * 100
+
+                print(f'BLEU-1: {bleu_1:.2f}')
+                print(f'BLEU-2: {bleu_2:.2f}')
+                print(f'BLEU-3: {bleu_3:.2f}')
+                print(f'BLEU-4: {bleu_4:.2f}')
+
+                if bleu_1 > best_bleu :
+                    best_bleu = bleu_1
+                    print('Best BLEU-1 has been updated : %.2f'%(best_bleu))
+                    save_checkpoint(decoder, 'checkpoints/best')
+            
+            ################################################################################################################################################################
         print('End of the training')
-        save_checkpoint(decoder, 'checkpoints/final')
     else:
         if os.path.exists(args.checkpoint):
             decoder_checkpoint = torch.load(args.checkpoint)
             decoder.load_state_dict(decoder_checkpoint['state_dict'])
-            print("trained decoder " + args.checkpoint + "is loaded")
+            print("trained decoder " + args.checkpoint + " is loaded")
 
         decoder.eval()
 
@@ -179,17 +257,15 @@ def main(args):
             
             print("[%d/%d] prediction done"%(j, test_loader.size // args.batch_size + 1))
 
-            bleu = corpus_bleu(ref, pred)
-            bleu_1gram = corpus_bleu(ref, pred, weights = (1,0,0,0))
-            bleu_2gram = corpus_bleu(ref, pred, weights = (0,1,0,0))
-            bleu_3gram = corpus_bleu(ref, pred, weights = (0,0,1,0))
-            bleu_4gram = corpus_bleu(ref, pred, weights = (0,0,0,1))
+            bleu_1 = corpus_bleu(ref, pred, weights = (1./1.,)) * 100
+            bleu_2 = corpus_bleu(ref, pred, weights = (1./2., 1./2.,)) * 100
+            bleu_3 = corpus_bleu(ref, pred, weights = (1./3., 1./3., 1./3.,)) * 100
+            bleu_4 = corpus_bleu(ref, pred, weights = (1./4., 1./4., 1./4., 1./4.,)) * 100
 
-            print(f'BLEU: {bleu:.2f}')
-            print(f'1-Gram BLEU: {bleu_1gram:.2f}')
-            print(f'2-Gram BLEU: {bleu_2gram:.2f}')
-            print(f'3-Gram BLEU: {bleu_3gram:.2f}')
-            print(f'4-Gram BLEU: {bleu_4gram:.2f}')
+            print(f'BLEU-1: {bleu_1:.2f}')
+            print(f'BLEU-2: {bleu_2:.2f}')
+            print(f'BLEU-3: {bleu_3:.2f}')
+            print(f'BLEU-4: {bleu_4:.2f}')
             
             j += 1
 
@@ -238,7 +314,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '--checkpoint',
         type=str,
-        default='checkpoints/final'
+        default='checkpoints/best'
     )
 
     args = parser.parse_args()
