@@ -40,13 +40,14 @@ class Attention(nn.Module):
         return z, alpha
 
 class Decoder(nn.Module):
-    def __init__(self, a_dim, h_dim, attn_dim, vocab_size, embed_dim):
+    def __init__(self, a_dim, h_dim, attn_dim, vocab_size, embed_dim, p_drop = 0.5):
         super(Decoder, self).__init__()
         self.LSTM = nn.LSTMCell(a_dim + embed_dim, h_dim)
         self.attention = Attention(a_dim, h_dim, attn_dim)
         self.f_init_c = nn.Linear(a_dim, h_dim)
         self.f_init_h = nn.Linear(a_dim, h_dim)
         self.embedding = nn.Embedding(vocab_size, embed_dim)
+        self.dropout = nn.Dropout(p_drop)
 
         # Deep output layer
         self.f_out = nn.Linear(embed_dim, vocab_size, bias = False)
@@ -79,7 +80,7 @@ class Decoder(nn.Module):
             z_t = beta * z_t
             
             # Deep output layer
-            output = self.f_out(Ey_t.squeeze(1) + self.f_h(h_t.squeeze(1)) + self.f_z(z_t)) # [batch, vocab_size]
+            output = self.f_out(self.dropout(Ey_t.squeeze(1) + self.f_h(h_t.squeeze(1)) + self.f_z(z_t))) # [batch, vocab_size]
             
             #prob = F.softmax(output, dim = -1) # [batch, vocab_size]
             prob = output # exclude softmax to use CrossEntropyLoss

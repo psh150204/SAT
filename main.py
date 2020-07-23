@@ -118,43 +118,43 @@ def main(args):
                 pred, ref = [], []
 
                 for src_batch, trg_batch in valid_loader:
-
                     start = time.time()
+                    batch_size = src_batch.size(0)
 
                     src_batch = src_batch.to(device) # [batch, 3, 244, 244]
                     trg_batch = torch.tensor(trg_batch).to(device) # [batch * 5, C]
                     trg_batch = torch.split(trg_batch, 5)
                     
                     batches = []
-                    for i in range(args.batch_size):
-                        batches.append(trg_batch[i].unsqueeze(0))
+                    for k in range(batch_size):
+                        batches.append(trg_batch[k].unsqueeze(0))
                     
                     trg_batch = torch.cat(batches, dim = 0) # [batch, 5, C]
                     
                     max_length = trg_batch.size(-1)
                     
-                    pred_batch = torch.zeros(args.batch_size, 1, dtype = int).to(device) # [batch, 1] = [[0],[0],...,[0]]
+                    pred_batch = torch.zeros(batch_size, 1, dtype = int).to(device) # [batch, 1] = [[0],[0],...,[0]]
                     
                     # eos_mask[i] = 1 means i-th sentence has eos
-                    eos_mask = torch.zeros(args.batch_size, dtype = int)
+                    eos_mask = torch.zeros(batch_size, dtype = int)
                     
                     a = encoder(src_batch)
                     
-                    for k in range(max_length):
+                    for _ in range(max_length):
                         
-                        output, _ = decoder(a, pred_batch) # [batch, k+1, vocab_size]
+                        output, _ = decoder(a, pred_batch) # [batch, _+1, vocab_size]
 
                         # greedy search
-                        output = torch.argmax(F.softmax(output, dim = -1), dim = -1) # [batch_size, k+1]
+                        output = torch.argmax(F.softmax(output, dim = -1), dim = -1) # [batch_size, _+1]
                         predictions = output[:,-1].unsqueeze(1)
                         pred_batch = torch.cat([pred_batch, predictions], dim = -1)
 
-                        for i in range(args.batch_size):
-                            if predictions[i] == eos_idx:
-                                eos_mask[i] = 1
+                        for l in range(batch_size):
+                            if predictions[l] == eos_idx:
+                                eos_mask[l] = 1
 
                         # every sentence has eos
-                        if eos_mask.sum() == args.batch_size :
+                        if eos_mask.sum() == batch_size :
                             break
                             
                     # flush the GPU cache
@@ -162,8 +162,8 @@ def main(args):
                         torch.cuda.empty_cache()
 
                     pred += seq2sen(pred_batch.cpu().numpy().tolist(), vocabulary)
-                    for i in range(args.batch_size):
-                        ref += [seq2sen(trg_batch[i].cpu().numpy().tolist(), vocabulary)]
+                    for m in range(batch_size):
+                        ref += [seq2sen(trg_batch[m].cpu().numpy().tolist(), vocabulary)]
                     
                     t = time.time() - start
                     j += 1
@@ -197,7 +197,7 @@ def main(args):
         # test
         test_loader = get_test_data_loader(args.path, args.token_path, args.voca_path, args.batch_size, pad_idx)
 
-        j = 1
+        j = 0
         pred, ref = [], []
         for src_batch, trg_batch in test_loader:
             # predict pred_batch from src_batch with your model.
@@ -207,77 +207,76 @@ def main(args):
             # [[0, 5, 6, 7, 1],
             #  [0, 4, 9, 1, 2],
             #  [0, 6, 1, 2, 2]]
+            start = time.time()
+            batch_size = src_batch.size(0)
 
             src_batch = src_batch.to(device) # [batch, 3, 244, 244]
             trg_batch = torch.tensor(trg_batch).to(device) # [batch * 5, C]
             trg_batch = torch.split(trg_batch, 5)
             
             batches = []
-            for i in range(args.batch_size):
-                batches.append(trg_batch[i].unsqueeze(0))
+            for k in range(batch_size):
+                batches.append(trg_batch[k].unsqueeze(0))
             
             trg_batch = torch.cat(batches, dim = 0) # [batch, 5, C]
             
             max_length = trg_batch.size(-1)
             
-            pred_batch = torch.zeros(args.batch_size, 1, dtype = int).to(device) # [batch, 1] = [[0],[0],...,[0]]
+            pred_batch = torch.zeros(batch_size, 1, dtype = int).to(device) # [batch, 1] = [[0],[0],...,[0]]
             
             # eos_mask[i] = 1 means i-th sentence has eos
-            eos_mask = torch.zeros(args.batch_size, dtype = int)
+            eos_mask = torch.zeros(batch_size, dtype = int)
             
             a = encoder(src_batch)
             
-            for k in range(max_length):
-                start = time.time()
-                output, _ = decoder(a, pred_batch) # [batch, k+1, vocab_size]
+            for _ in range(max_length):
+                
+                output, _ = decoder(a, pred_batch) # [batch, _+1, vocab_size]
 
                 # greedy search
-                output = torch.argmax(F.softmax(output, dim = -1), dim = -1) # [batch_size, k+1]
+                output = torch.argmax(F.softmax(output, dim = -1), dim = -1) # [batch_size, _+1]
                 predictions = output[:,-1].unsqueeze(1)
                 pred_batch = torch.cat([pred_batch, predictions], dim = -1)
 
-                for i in range(args.batch_size):
-                    if predictions[i] == eos_idx:
-                        eos_mask[i] = 1
+                for l in range(batch_size):
+                    if predictions[l] == eos_idx:
+                        eos_mask[l] = 1
 
                 # every sentence has eos
-                if eos_mask.sum() == args.batch_size :
+                if eos_mask.sum() == batch_size :
                     break
-                    
-                t = time.time() - start
-                print("[%d/%d][%d/%d] prediction done | time : %.2fs"%(j, test_loader.size // args.batch_size + 1, k+1, max_length, t))
 
             # flush the GPU cache
             if torch.cuda.is_available():
                 torch.cuda.empty_cache()
 
             pred += seq2sen(pred_batch.cpu().numpy().tolist(), vocabulary)
-            for i in range(args.batch_size):
-                ref += [seq2sen(trg_batch[i].cpu().numpy().tolist(), vocabulary)]
+            for m in range(batch_size):
+                ref += [seq2sen(trg_batch[m].cpu().numpy().tolist(), vocabulary)]
             
-            print("[%d/%d] prediction done"%(j, test_loader.size // args.batch_size + 1))
-
-            bleu_1 = corpus_bleu(ref, pred, weights = (1./1.,)) * 100
-            bleu_2 = corpus_bleu(ref, pred, weights = (1./2., 1./2.,)) * 100
-            bleu_3 = corpus_bleu(ref, pred, weights = (1./3., 1./3., 1./3.,)) * 100
-            bleu_4 = corpus_bleu(ref, pred, weights = (1./4., 1./4., 1./4., 1./4.,)) * 100
-
-            print(f'BLEU-1: {bleu_1:.2f}')
-            print(f'BLEU-2: {bleu_2:.2f}')
-            print(f'BLEU-3: {bleu_3:.2f}')
-            print(f'BLEU-4: {bleu_4:.2f}')
-            
+            t = time.time() - start
             j += 1
+            print("[%d/%d] prediction done | time : %.2fs"%(j, test_loader.size // args.batch_size + 1, t))
 
-            with open('results/pred.txt', 'w') as f:
-                for line in pred:
+        bleu_1 = corpus_bleu(ref, pred, weights = (1./1.,)) * 100
+        bleu_2 = corpus_bleu(ref, pred, weights = (1./2., 1./2.,)) * 100
+        bleu_3 = corpus_bleu(ref, pred, weights = (1./3., 1./3., 1./3.,)) * 100
+        bleu_4 = corpus_bleu(ref, pred, weights = (1./4., 1./4., 1./4., 1./4.,)) * 100
+
+        print(f'BLEU-1: {bleu_1:.2f}')
+        print(f'BLEU-2: {bleu_2:.2f}')
+        print(f'BLEU-3: {bleu_3:.2f}')
+        print(f'BLEU-4: {bleu_4:.2f}')
+        
+        with open('results/pred.txt', 'w') as f:
+            for line in pred:
+                f.write('{}\n'.format(line))
+
+        with open('results/ref.txt', 'w') as f:
+            for lines in ref:
+                for line in lines:
                     f.write('{}\n'.format(line))
-
-            with open('results/ref.txt', 'w') as f:
-                for lines in ref:
-                    for line in lines:
-                        f.write('{}\n'.format(line))
-                    f.write('_'*50 + '\n')
+                f.write('_'*50 + '\n')
 
 
 if __name__ == '__main__':
