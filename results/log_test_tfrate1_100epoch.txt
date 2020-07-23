@@ -1,16 +1,16 @@
-trained decoder checkpoints/epoch_184is loaded
+trained decoder checkpoints/epoch_100is loaded
 tokens are loaded from preprocessed_data/tokens
 vocabulary is loaded from preprocessed_data/vocabulary
 [1/32][1/24] prediction done | time : 0.09s
-[1/32][2/24] prediction done | time : 0.02s
+[1/32][2/24] prediction done | time : 0.01s
 [1/32][3/24] prediction done | time : 0.01s
 [1/32][4/24] prediction done | time : 0.01s
 [1/32][5/24] prediction done | time : 0.01s
 [1/32][6/24] prediction done | time : 0.01s
 [1/32][7/24] prediction done | time : 0.01s
-[1/32][8/24] prediction done | time : 0.02s
+[1/32][8/24] prediction done | time : 0.01s
 [1/32][9/24] prediction done | time : 0.01s
-[1/32][10/24] prediction done | time : 0.02s
+[1/32][10/24] prediction done | time : 0.01s
 [1/32][11/24] prediction done | time : 0.02s
 [1/32][12/24] prediction done | time : 0.02s
 [1/32][13/24] prediction done | time : 0.02s
@@ -19,19 +19,19 @@ vocabulary is loaded from preprocessed_data/vocabulary
 [1/32][16/24] prediction done | time : 0.02s
 [1/32][17/24] prediction done | time : 0.02s
 [1/32][18/24] prediction done | time : 0.02s
-[1/32][19/24] prediction done | time : 0.02s
+[1/32][19/24] prediction done | time : 0.03s
 [1/32][20/24] prediction done | time : 0.03s
-32
-32
-5
+[1/32][21/24] prediction done | time : 0.03s
+[1/32][22/24] prediction done | time : 0.03s
+[1/32][23/24] prediction done | time : 0.03s
+[1/32][24/24] prediction done | time : 0.03s
 [1/32] prediction done
-BLEU: 0.05
-1-Gram BLEU: 0.43
-2-Gram BLEU: 0.13
-3-Gram BLEU: 0.04
-4-Gram BLEU: 0.00
+BLEU-1: 51.72
+BLEU-2: 34.39
+BLEU-3: 23.13
+BLEU-4: 14.45
 [2/32][1/30] prediction done | time : 0.08s
-[2/32][2/30] prediction done | time : 0.00s
+[2/32][2/30] prediction done | time : 0.01s
 [2/32][3/30] prediction done | time : 0.01s
 [2/32][4/30] prediction done | time : 0.01s
 [2/32][5/30] prediction done | time : 0.01s
@@ -49,17 +49,15 @@ BLEU: 0.05
 [2/32][17/30] prediction done | time : 0.02s
 [2/32][18/30] prediction done | time : 0.02s
 [2/32][19/30] prediction done | time : 0.02s
-64
-64
-5
+[2/32][20/30] prediction done | time : 0.02s
+[2/32][21/30] prediction done | time : 0.03s
 [2/32] prediction done
-BLEU: 0.09
-1-Gram BLEU: 0.47
-2-Gram BLEU: 0.17
-3-Gram BLEU: 0.06
-4-Gram BLEU: 0.01
+BLEU-1: 53.32
+BLEU-2: 34.69
+BLEU-3: 22.63
+BLEU-4: 13.90
 [3/32][1/29] prediction done | time : 0.08s
-[3/32][2/29] prediction done | time : 0.01s
+[3/32][2/29] prediction done | time : 0.00s
 [3/32][3/29] prediction done | time : 0.01s
 [3/32][4/29] prediction done | time : 0.01s
 [3/32][5/29] prediction done | time : 0.01s
@@ -77,18 +75,13 @@ BLEU: 0.09
 [3/32][17/29] prediction done | time : 0.02s
 [3/32][18/29] prediction done | time : 0.02s
 [3/32][19/29] prediction done | time : 0.02s
-[3/32][20/29] prediction done | time : 0.02s
-96
-96
-5
 [3/32] prediction done
-BLEU: 0.09
-1-Gram BLEU: 0.45
-2-Gram BLEU: 0.16
-3-Gram BLEU: 0.05
-4-Gram BLEU: 0.02
+BLEU-1: 52.64
+BLEU-2: 34.19
+BLEU-3: 22.58
+BLEU-4: 14.21
 [4/32][1/26] prediction done | time : 0.08s
-[4/32][2/26] prediction done | time : 0.01s
+[4/32][2/26] prediction done | time : 0.00s
 [4/32][3/26] prediction done | time : 0.01s
 [4/32][4/26] prediction done | time : 0.01s
 [4/32][5/26] prediction done | time : 0.01s
@@ -97,24 +90,21 @@ BLEU: 0.09
 [4/32][8/26] prediction done | time : 0.01s
 [4/32][9/26] prediction done | time : 0.01s
 [4/32][10/26] prediction done | time : 0.01s
-[4/32][11/26] prediction done | time : 0.02s
+[4/32][11/26] prediction done | time : 0.01s
 [4/32][12/26] prediction done | time : 0.02s
 [4/32][13/26] prediction done | time : 0.02s
 [4/32][14/26] prediction done | time : 0.02s
 [4/32][15/26] prediction done | time : 0.02s
 [4/32][16/26] prediction done | time : 0.02s
 [4/32][17/26] prediction done | time : 0.02s
-128
-128
-5
+[4/32][18/26] prediction done | time : 0.02s
 [4/32] prediction done
-BLEU: 0.10
-1-Gram BLEU: 0.45
-2-Gram BLEU: 0.17
-3-Gram BLEU: 0.06
-4-Gram BLEU: 0.02
+BLEU-1: 52.77
+BLEU-2: 33.62
+BLEU-3: 21.86
+BLEU-4: 13.54
 [5/32][1/22] prediction done | time : 0.08s
-[5/32][2/22] prediction done | time : 0.00s
+[5/32][2/22] prediction done | time : 0.01s
 [5/32][3/22] prediction done | time : 0.01s
 [5/32][4/22] prediction done | time : 0.01s
 [5/32][5/22] prediction done | time : 0.01s
@@ -131,17 +121,13 @@ BLEU: 0.10
 [5/32][16/22] prediction done | time : 0.02s
 [5/32][17/22] prediction done | time : 0.02s
 [5/32][18/22] prediction done | time : 0.02s
-[5/32][19/22] prediction done | time : 0.02s
-[5/32][20/22] prediction done | time : 0.02s
-160
-160
-5
+[5/32][19/22] prediction done | time : 0.03s
+[5/32][20/22] prediction done | time : 0.03s
 [5/32] prediction done
-BLEU: 0.09
-1-Gram BLEU: 0.46
-2-Gram BLEU: 0.17
-3-Gram BLEU: 0.06
-4-Gram BLEU: 0.02
+BLEU-1: 53.09
+BLEU-2: 33.89
+BLEU-3: 21.50
+BLEU-4: 12.78
 [6/32][1/27] prediction done | time : 0.08s
 [6/32][2/27] prediction done | time : 0.00s
 [6/32][3/27] prediction done | time : 0.01s
@@ -152,7 +138,7 @@ BLEU: 0.09
 [6/32][8/27] prediction done | time : 0.01s
 [6/32][9/27] prediction done | time : 0.01s
 [6/32][10/27] prediction done | time : 0.01s
-[6/32][11/27] prediction done | time : 0.01s
+[6/32][11/27] prediction done | time : 0.02s
 [6/32][12/27] prediction done | time : 0.02s
 [6/32][13/27] prediction done | time : 0.02s
 [6/32][14/27] prediction done | time : 0.02s
@@ -162,17 +148,11 @@ BLEU: 0.09
 [6/32][18/27] prediction done | time : 0.02s
 [6/32][19/27] prediction done | time : 0.02s
 [6/32][20/27] prediction done | time : 0.02s
-[6/32][21/27] prediction done | time : 0.03s
-[6/32][22/27] prediction done | time : 0.03s
-192
-192
-5
 [6/32] prediction done
-BLEU: 0.09
-1-Gram BLEU: 0.45
-2-Gram BLEU: 0.16
-3-Gram BLEU: 0.05
-4-Gram BLEU: 0.02
+BLEU-1: 52.50
+BLEU-2: 33.84
+BLEU-3: 21.92
+BLEU-4: 13.48
 [7/32][1/25] prediction done | time : 0.08s
 [7/32][2/25] prediction done | time : 0.01s
 [7/32][3/25] prediction done | time : 0.01s
@@ -192,16 +172,12 @@ BLEU: 0.09
 [7/32][17/25] prediction done | time : 0.02s
 [7/32][18/25] prediction done | time : 0.02s
 [7/32][19/25] prediction done | time : 0.02s
-[7/32][20/25] prediction done | time : 0.03s
-224
-224
-5
+[7/32][20/25] prediction done | time : 0.02s
 [7/32] prediction done
-BLEU: 0.09
-1-Gram BLEU: 0.46
-2-Gram BLEU: 0.17
-3-Gram BLEU: 0.06
-4-Gram BLEU: 0.02
+BLEU-1: 52.69
+BLEU-2: 34.28
+BLEU-3: 22.22
+BLEU-4: 13.52
 [8/32][1/26] prediction done | time : 0.08s
 [8/32][2/26] prediction done | time : 0.00s
 [8/32][3/26] prediction done | time : 0.01s
@@ -212,7 +188,7 @@ BLEU: 0.09
 [8/32][8/26] prediction done | time : 0.01s
 [8/32][9/26] prediction done | time : 0.01s
 [8/32][10/26] prediction done | time : 0.01s
-[8/32][11/26] prediction done | time : 0.01s
+[8/32][11/26] prediction done | time : 0.02s
 [8/32][12/26] prediction done | time : 0.02s
 [8/32][13/26] prediction done | time : 0.02s
 [8/32][14/26] prediction done | time : 0.02s
@@ -221,15 +197,12 @@ BLEU: 0.09
 [8/32][17/26] prediction done | time : 0.02s
 [8/32][18/26] prediction done | time : 0.02s
 [8/32][19/26] prediction done | time : 0.02s
-256
-256
-5
+[8/32][20/26] prediction done | time : 0.03s
 [8/32] prediction done
-BLEU: 0.09
-1-Gram BLEU: 0.46
-2-Gram BLEU: 0.17
-3-Gram BLEU: 0.06
-4-Gram BLEU: 0.02
+BLEU-1: 52.98
+BLEU-2: 34.23
+BLEU-3: 21.90
+BLEU-4: 13.32
 [9/32][1/23] prediction done | time : 0.08s
 [9/32][2/23] prediction done | time : 0.00s
 [9/32][3/23] prediction done | time : 0.01s
@@ -249,21 +222,13 @@ BLEU: 0.09
 [9/32][17/23] prediction done | time : 0.02s
 [9/32][18/23] prediction done | time : 0.02s
 [9/32][19/23] prediction done | time : 0.02s
-[9/32][20/23] prediction done | time : 0.03s
-[9/32][21/23] prediction done | time : 0.03s
-[9/32][22/23] prediction done | time : 0.03s
-[9/32][23/23] prediction done | time : 0.03s
-288
-288
-5
 [9/32] prediction done
-BLEU: 0.10
-1-Gram BLEU: 0.47
-2-Gram BLEU: 0.18
-3-Gram BLEU: 0.06
-4-Gram BLEU: 0.02
+BLEU-1: 53.22
+BLEU-2: 34.56
+BLEU-3: 22.15
+BLEU-4: 13.65
 [10/32][1/27] prediction done | time : 0.08s
-[10/32][2/27] prediction done | time : 0.01s
+[10/32][2/27] prediction done | time : 0.00s
 [10/32][3/27] prediction done | time : 0.01s
 [10/32][4/27] prediction done | time : 0.01s
 [10/32][5/27] prediction done | time : 0.01s
@@ -281,17 +246,14 @@ BLEU: 0.10
 [10/32][17/27] prediction done | time : 0.02s
 [10/32][18/27] prediction done | time : 0.02s
 [10/32][19/27] prediction done | time : 0.02s
-320
-320
-5
+[10/32][20/27] prediction done | time : 0.02s
 [10/32] prediction done
-BLEU: 0.10
-1-Gram BLEU: 0.47
-2-Gram BLEU: 0.18
-3-Gram BLEU: 0.06
-4-Gram BLEU: 0.02
+BLEU-1: 53.69
+BLEU-2: 34.94
+BLEU-3: 22.48
+BLEU-4: 14.02
 [11/32][1/25] prediction done | time : 0.08s
-[11/32][2/25] prediction done | time : 0.00s
+[11/32][2/25] prediction done | time : 0.01s
 [11/32][3/25] prediction done | time : 0.01s
 [11/32][4/25] prediction done | time : 0.01s
 [11/32][5/25] prediction done | time : 0.01s
@@ -309,17 +271,14 @@ BLEU: 0.10
 [11/32][17/25] prediction done | time : 0.02s
 [11/32][18/25] prediction done | time : 0.02s
 [11/32][19/25] prediction done | time : 0.02s
-[11/32][20/25] prediction done | time : 0.02s
+[11/32][20/25] prediction done | time : 0.03s
 [11/32][21/25] prediction done | time : 0.03s
-352
-352
-5
+[11/32][22/25] prediction done | time : 0.03s
 [11/32] prediction done
-BLEU: 0.10
-1-Gram BLEU: 0.47
-2-Gram BLEU: 0.18
-3-Gram BLEU: 0.06
-4-Gram BLEU: 0.02
+BLEU-1: 53.37
+BLEU-2: 34.46
+BLEU-3: 22.06
+BLEU-4: 13.79
 [12/32][1/35] prediction done | time : 0.08s
 [12/32][2/35] prediction done | time : 0.00s
 [12/32][3/35] prediction done | time : 0.01s
@@ -343,16 +302,11 @@ BLEU: 0.10
 [12/32][21/35] prediction done | time : 0.03s
 [12/32][22/35] prediction done | time : 0.03s
 [12/32][23/35] prediction done | time : 0.03s
-[12/32][24/35] prediction done | time : 0.03s
-384
-384
-5
 [12/32] prediction done
-BLEU: 0.10
-1-Gram BLEU: 0.47
-2-Gram BLEU: 0.18
-3-Gram BLEU: 0.06
-4-Gram BLEU: 0.02
+BLEU-1: 53.69
+BLEU-2: 35.01
+BLEU-3: 22.56
+BLEU-4: 14.22
 [13/32][1/28] prediction done | time : 0.08s
 [13/32][2/28] prediction done | time : 0.01s
 [13/32][3/28] prediction done | time : 0.01s
@@ -363,7 +317,7 @@ BLEU: 0.10
 [13/32][8/28] prediction done | time : 0.01s
 [13/32][9/28] prediction done | time : 0.01s
 [13/32][10/28] prediction done | time : 0.01s
-[13/32][11/28] prediction done | time : 0.01s
+[13/32][11/28] prediction done | time : 0.02s
 [13/32][12/28] prediction done | time : 0.02s
 [13/32][13/28] prediction done | time : 0.02s
 [13/32][14/28] prediction done | time : 0.02s
@@ -372,18 +326,15 @@ BLEU: 0.10
 [13/32][17/28] prediction done | time : 0.02s
 [13/32][18/28] prediction done | time : 0.02s
 [13/32][19/28] prediction done | time : 0.02s
-[13/32][20/28] prediction done | time : 0.03s
-416
-416
-5
+[13/32][20/28] prediction done | time : 0.02s
+[13/32][21/28] prediction done | time : 0.03s
 [13/32] prediction done
-BLEU: 0.09
-1-Gram BLEU: 0.46
-2-Gram BLEU: 0.17
-3-Gram BLEU: 0.06
-4-Gram BLEU: 0.02
+BLEU-1: 53.76
+BLEU-2: 35.07
+BLEU-3: 22.68
+BLEU-4: 14.36
 [14/32][1/24] prediction done | time : 0.08s
-[14/32][2/24] prediction done | time : 0.01s
+[14/32][2/24] prediction done | time : 0.00s
 [14/32][3/24] prediction done | time : 0.01s
 [14/32][4/24] prediction done | time : 0.01s
 [14/32][5/24] prediction done | time : 0.01s
@@ -401,20 +352,15 @@ BLEU: 0.09
 [14/32][17/24] prediction done | time : 0.02s
 [14/32][18/24] prediction done | time : 0.02s
 [14/32][19/24] prediction done | time : 0.02s
-[14/32][20/24] prediction done | time : 0.02s
+[14/32][20/24] prediction done | time : 0.03s
 [14/32][21/24] prediction done | time : 0.03s
 [14/32][22/24] prediction done | time : 0.03s
 [14/32][23/24] prediction done | time : 0.03s
-[14/32][24/24] prediction done | time : 0.03s
-448
-448
-5
 [14/32] prediction done
-BLEU: 0.10
-1-Gram BLEU: 0.47
-2-Gram BLEU: 0.18
-3-Gram BLEU: 0.06
-4-Gram BLEU: 0.02
+BLEU-1: 53.57
+BLEU-2: 34.83
+BLEU-3: 22.48
+BLEU-4: 14.13
 [15/32][1/23] prediction done | time : 0.08s
 [15/32][2/23] prediction done | time : 0.00s
 [15/32][3/23] prediction done | time : 0.01s
@@ -438,15 +384,11 @@ BLEU: 0.10
 [15/32][21/23] prediction done | time : 0.03s
 [15/32][22/23] prediction done | time : 0.03s
 [15/32][23/23] prediction done | time : 0.03s
-480
-480
-5
 [15/32] prediction done
-BLEU: 0.10
-1-Gram BLEU: 0.47
-2-Gram BLEU: 0.17
-3-Gram BLEU: 0.06
-4-Gram BLEU: 0.02
+BLEU-1: 53.30
+BLEU-2: 34.54
+BLEU-3: 22.22
+BLEU-4: 13.92
 [16/32][1/22] prediction done | time : 0.08s
 [16/32][2/22] prediction done | time : 0.00s
 [16/32][3/22] prediction done | time : 0.01s
@@ -466,20 +408,15 @@ BLEU: 0.10
 [16/32][17/22] prediction done | time : 0.02s
 [16/32][18/22] prediction done | time : 0.02s
 [16/32][19/22] prediction done | time : 0.02s
-[16/32][20/22] prediction done | time : 0.02s
+[16/32][20/22] prediction done | time : 0.03s
 [16/32][21/22] prediction done | time : 0.03s
-[16/32][22/22] prediction done | time : 0.03s
-512
-512
-5
 [16/32] prediction done
-BLEU: 0.10
-1-Gram BLEU: 0.46
-2-Gram BLEU: 0.17
-3-Gram BLEU: 0.06
-4-Gram BLEU: 0.02
-[17/32][1/31] prediction done | time : 0.09s
-[17/32][2/31] prediction done | time : 0.01s
+BLEU-1: 53.17
+BLEU-2: 34.51
+BLEU-3: 22.22
+BLEU-4: 13.95
+[17/32][1/31] prediction done | time : 0.08s
+[17/32][2/31] prediction done | time : 0.00s
 [17/32][3/31] prediction done | time : 0.01s
 [17/32][4/31] prediction done | time : 0.01s
 [17/32][5/31] prediction done | time : 0.01s
@@ -487,7 +424,7 @@ BLEU: 0.10
 [17/32][7/31] prediction done | time : 0.01s
 [17/32][8/31] prediction done | time : 0.01s
 [17/32][9/31] prediction done | time : 0.01s
-[17/32][10/31] prediction done | time : 0.02s
+[17/32][10/31] prediction done | time : 0.01s
 [17/32][11/31] prediction done | time : 0.02s
 [17/32][12/31] prediction done | time : 0.02s
 [17/32][13/31] prediction done | time : 0.02s
@@ -498,17 +435,24 @@ BLEU: 0.10
 [17/32][18/31] prediction done | time : 0.02s
 [17/32][19/31] prediction done | time : 0.02s
 [17/32][20/31] prediction done | time : 0.03s
-544
-544
-5
+[17/32][21/31] prediction done | time : 0.03s
+[17/32][22/31] prediction done | time : 0.03s
+[17/32][23/31] prediction done | time : 0.03s
+[17/32][24/31] prediction done | time : 0.03s
+[17/32][25/31] prediction done | time : 0.03s
+[17/32][26/31] prediction done | time : 0.03s
+[17/32][27/31] prediction done | time : 0.03s
+[17/32][28/31] prediction done | time : 0.03s
+[17/32][29/31] prediction done | time : 0.03s
+[17/32][30/31] prediction done | time : 0.04s
+[17/32][31/31] prediction done | time : 0.04s
 [17/32] prediction done
-BLEU: 0.10
-1-Gram BLEU: 0.46
-2-Gram BLEU: 0.17
-3-Gram BLEU: 0.06
-4-Gram BLEU: 0.02
+BLEU-1: 53.00
+BLEU-2: 34.37
+BLEU-3: 22.08
+BLEU-4: 13.86
 [18/32][1/25] prediction done | time : 0.08s
-[18/32][2/25] prediction done | time : 0.01s
+[18/32][2/25] prediction done | time : 0.00s
 [18/32][3/25] prediction done | time : 0.01s
 [18/32][4/25] prediction done | time : 0.01s
 [18/32][5/25] prediction done | time : 0.01s
@@ -526,21 +470,17 @@ BLEU: 0.10
 [18/32][17/25] prediction done | time : 0.02s
 [18/32][18/25] prediction done | time : 0.02s
 [18/32][19/25] prediction done | time : 0.02s
-[18/32][20/25] prediction done | time : 0.02s
+[18/32][20/25] prediction done | time : 0.03s
 [18/32][21/25] prediction done | time : 0.03s
 [18/32][22/25] prediction done | time : 0.03s
-[18/32][23/25] prediction done | time : 0.04s
+[18/32][23/25] prediction done | time : 0.03s
 [18/32][24/25] prediction done | time : 0.03s
 [18/32][25/25] prediction done | time : 0.03s
-576
-576
-5
 [18/32] prediction done
-BLEU: 0.10
-1-Gram BLEU: 0.47
-2-Gram BLEU: 0.18
-3-Gram BLEU: 0.06
-4-Gram BLEU: 0.02
+BLEU-1: 52.70
+BLEU-2: 34.17
+BLEU-3: 21.92
+BLEU-4: 13.80
 [19/32][1/27] prediction done | time : 0.08s
 [19/32][2/27] prediction done | time : 0.01s
 [19/32][3/27] prediction done | time : 0.01s
@@ -561,15 +501,15 @@ BLEU: 0.10
 [19/32][18/27] prediction done | time : 0.02s
 [19/32][19/27] prediction done | time : 0.02s
 [19/32][20/27] prediction done | time : 0.03s
-608
-608
-5
+[19/32][21/27] prediction done | time : 0.03s
+[19/32][22/27] prediction done | time : 0.03s
+[19/32][23/27] prediction done | time : 0.03s
+[19/32][24/27] prediction done | time : 0.03s
 [19/32] prediction done
-BLEU: 0.10
-1-Gram BLEU: 0.47
-2-Gram BLEU: 0.18
-3-Gram BLEU: 0.06
-4-Gram BLEU: 0.02
+BLEU-1: 52.58
+BLEU-2: 34.06
+BLEU-3: 21.88
+BLEU-4: 13.86
 [20/32][1/27] prediction done | time : 0.08s
 [20/32][2/27] prediction done | time : 0.00s
 [20/32][3/27] prediction done | time : 0.01s
@@ -586,22 +526,13 @@ BLEU: 0.10
 [20/32][14/27] prediction done | time : 0.02s
 [20/32][15/27] prediction done | time : 0.02s
 [20/32][16/27] prediction done | time : 0.02s
-[20/32][17/27] prediction done | time : 0.02s
-[20/32][18/27] prediction done | time : 0.02s
-[20/32][19/27] prediction done | time : 0.02s
-[20/32][20/27] prediction done | time : 0.02s
-[20/32][21/27] prediction done | time : 0.03s
-640
-640
-5
 [20/32] prediction done
-BLEU: 0.10
-1-Gram BLEU: 0.47
-2-Gram BLEU: 0.18
-3-Gram BLEU: 0.06
-4-Gram BLEU: 0.02
+BLEU-1: 52.76
+BLEU-2: 34.26
+BLEU-3: 21.98
+BLEU-4: 13.90
 [21/32][1/22] prediction done | time : 0.08s
-[21/32][2/22] prediction done | time : 0.01s
+[21/32][2/22] prediction done | time : 0.00s
 [21/32][3/22] prediction done | time : 0.01s
 [21/32][4/22] prediction done | time : 0.01s
 [21/32][5/22] prediction done | time : 0.01s
@@ -621,16 +552,11 @@ BLEU: 0.10
 [21/32][19/22] prediction done | time : 0.02s
 [21/32][20/22] prediction done | time : 0.03s
 [21/32][21/22] prediction done | time : 0.03s
-[21/32][22/22] prediction done | time : 0.03s
-672
-672
-5
 [21/32] prediction done
-BLEU: 0.10
-1-Gram BLEU: 0.47
-2-Gram BLEU: 0.17
-3-Gram BLEU: 0.06
-4-Gram BLEU: 0.02
+BLEU-1: 52.75
+BLEU-2: 34.18
+BLEU-3: 21.86
+BLEU-4: 13.83
 [22/32][1/27] prediction done | time : 0.08s
 [22/32][2/27] prediction done | time : 0.00s
 [22/32][3/27] prediction done | time : 0.01s
@@ -650,21 +576,20 @@ BLEU: 0.10
 [22/32][17/27] prediction done | time : 0.02s
 [22/32][18/27] prediction done | time : 0.02s
 [22/32][19/27] prediction done | time : 0.02s
-[22/32][20/27] prediction done | time : 0.02s
+[22/32][20/27] prediction done | time : 0.03s
 [22/32][21/27] prediction done | time : 0.03s
 [22/32][22/27] prediction done | time : 0.03s
 [22/32][23/27] prediction done | time : 0.03s
-704
-704
-5
+[22/32][24/27] prediction done | time : 0.03s
+[22/32][25/27] prediction done | time : 0.03s
+[22/32][26/27] prediction done | time : 0.03s
 [22/32] prediction done
-BLEU: 0.10
-1-Gram BLEU: 0.47
-2-Gram BLEU: 0.17
-3-Gram BLEU: 0.06
-4-Gram BLEU: 0.02
+BLEU-1: 52.67
+BLEU-2: 34.17
+BLEU-3: 21.90
+BLEU-4: 13.84
 [23/32][1/28] prediction done | time : 0.08s
-[23/32][2/28] prediction done | time : 0.01s
+[23/32][2/28] prediction done | time : 0.00s
 [23/32][3/28] prediction done | time : 0.01s
 [23/32][4/28] prediction done | time : 0.01s
 [23/32][5/28] prediction done | time : 0.01s
@@ -682,20 +607,19 @@ BLEU: 0.10
 [23/32][17/28] prediction done | time : 0.02s
 [23/32][18/28] prediction done | time : 0.02s
 [23/32][19/28] prediction done | time : 0.02s
-[23/32][20/28] prediction done | time : 0.02s
+[23/32][20/28] prediction done | time : 0.03s
 [23/32][21/28] prediction done | time : 0.03s
 [23/32][22/28] prediction done | time : 0.03s
-736
-736
-5
+[23/32][23/28] prediction done | time : 0.03s
+[23/32][24/28] prediction done | time : 0.03s
+[23/32][25/28] prediction done | time : 0.03s
 [23/32] prediction done
-BLEU: 0.10
-1-Gram BLEU: 0.47
-2-Gram BLEU: 0.17
-3-Gram BLEU: 0.06
-4-Gram BLEU: 0.02
+BLEU-1: 52.46
+BLEU-2: 34.08
+BLEU-3: 21.84
+BLEU-4: 13.76
 [24/32][1/33] prediction done | time : 0.08s
-[24/32][2/33] prediction done | time : 0.00s
+[24/32][2/33] prediction done | time : 0.01s
 [24/32][3/33] prediction done | time : 0.01s
 [24/32][4/33] prediction done | time : 0.01s
 [24/32][5/33] prediction done | time : 0.01s
@@ -715,15 +639,16 @@ BLEU: 0.10
 [24/32][19/33] prediction done | time : 0.02s
 [24/32][20/33] prediction done | time : 0.03s
 [24/32][21/33] prediction done | time : 0.03s
-768
-768
-5
+[24/32][22/33] prediction done | time : 0.03s
+[24/32][23/33] prediction done | time : 0.03s
+[24/32][24/33] prediction done | time : 0.03s
+[24/32][25/33] prediction done | time : 0.03s
+[24/32][26/33] prediction done | time : 0.03s
 [24/32] prediction done
-BLEU: 0.09
-1-Gram BLEU: 0.47
-2-Gram BLEU: 0.17
-3-Gram BLEU: 0.06
-4-Gram BLEU: 0.02
+BLEU-1: 52.39
+BLEU-2: 33.98
+BLEU-3: 21.79
+BLEU-4: 13.76
 [25/32][1/28] prediction done | time : 0.08s
 [25/32][2/28] prediction done | time : 0.00s
 [25/32][3/28] prediction done | time : 0.01s
@@ -740,20 +665,11 @@ BLEU: 0.09
 [25/32][14/28] prediction done | time : 0.02s
 [25/32][15/28] prediction done | time : 0.02s
 [25/32][16/28] prediction done | time : 0.02s
-[25/32][17/28] prediction done | time : 0.02s
-[25/32][18/28] prediction done | time : 0.02s
-[25/32][19/28] prediction done | time : 0.02s
-[25/32][20/28] prediction done | time : 0.03s
-[25/32][21/28] prediction done | time : 0.03s
-800
-800
-5
 [25/32] prediction done
-BLEU: 0.09
-1-Gram BLEU: 0.47
-2-Gram BLEU: 0.17
-3-Gram BLEU: 0.06
-4-Gram BLEU: 0.02
+BLEU-1: 52.50
+BLEU-2: 34.04
+BLEU-3: 21.77
+BLEU-4: 13.70
 [26/32][1/25] prediction done | time : 0.08s
 [26/32][2/25] prediction done | time : 0.00s
 [26/32][3/25] prediction done | time : 0.01s
@@ -773,19 +689,17 @@ BLEU: 0.09
 [26/32][17/25] prediction done | time : 0.02s
 [26/32][18/25] prediction done | time : 0.02s
 [26/32][19/25] prediction done | time : 0.02s
-[26/32][20/25] prediction done | time : 0.02s
+[26/32][20/25] prediction done | time : 0.03s
 [26/32][21/25] prediction done | time : 0.03s
 [26/32][22/25] prediction done | time : 0.03s
-832
-832
-5
+[26/32][23/25] prediction done | time : 0.03s
+[26/32][24/25] prediction done | time : 0.03s
 [26/32] prediction done
-BLEU: 0.09
-1-Gram BLEU: 0.47
-2-Gram BLEU: 0.17
-3-Gram BLEU: 0.06
-4-Gram BLEU: 0.02
-[27/32][1/23] prediction done | time : 0.08s
+BLEU-1: 52.46
+BLEU-2: 34.00
+BLEU-3: 21.75
+BLEU-4: 13.67
+[27/32][1/23] prediction done | time : 0.09s
 [27/32][2/23] prediction done | time : 0.01s
 [27/32][3/23] prediction done | time : 0.01s
 [27/32][4/23] prediction done | time : 0.01s
@@ -794,7 +708,7 @@ BLEU: 0.09
 [27/32][7/23] prediction done | time : 0.01s
 [27/32][8/23] prediction done | time : 0.01s
 [27/32][9/23] prediction done | time : 0.01s
-[27/32][10/23] prediction done | time : 0.01s
+[27/32][10/23] prediction done | time : 0.02s
 [27/32][11/23] prediction done | time : 0.02s
 [27/32][12/23] prediction done | time : 0.02s
 [27/32][13/23] prediction done | time : 0.02s
@@ -808,17 +722,13 @@ BLEU: 0.09
 [27/32][21/23] prediction done | time : 0.03s
 [27/32][22/23] prediction done | time : 0.03s
 [27/32][23/23] prediction done | time : 0.03s
-864
-864
-5
 [27/32] prediction done
-BLEU: 0.09
-1-Gram BLEU: 0.47
-2-Gram BLEU: 0.17
-3-Gram BLEU: 0.06
-4-Gram BLEU: 0.02
+BLEU-1: 52.39
+BLEU-2: 33.89
+BLEU-3: 21.60
+BLEU-4: 13.57
 [28/32][1/22] prediction done | time : 0.08s
-[28/32][2/22] prediction done | time : 0.00s
+[28/32][2/22] prediction done | time : 0.01s
 [28/32][3/22] prediction done | time : 0.01s
 [28/32][4/22] prediction done | time : 0.01s
 [28/32][5/22] prediction done | time : 0.01s
@@ -827,7 +737,7 @@ BLEU: 0.09
 [28/32][8/22] prediction done | time : 0.01s
 [28/32][9/22] prediction done | time : 0.01s
 [28/32][10/22] prediction done | time : 0.01s
-[28/32][11/22] prediction done | time : 0.01s
+[28/32][11/22] prediction done | time : 0.02s
 [28/32][12/22] prediction done | time : 0.02s
 [28/32][13/22] prediction done | time : 0.02s
 [28/32][14/22] prediction done | time : 0.02s
@@ -836,20 +746,16 @@ BLEU: 0.09
 [28/32][17/22] prediction done | time : 0.02s
 [28/32][18/22] prediction done | time : 0.02s
 [28/32][19/22] prediction done | time : 0.02s
-[28/32][20/22] prediction done | time : 0.02s
+[28/32][20/22] prediction done | time : 0.03s
 [28/32][21/22] prediction done | time : 0.03s
 [28/32][22/22] prediction done | time : 0.03s
-896
-896
-5
 [28/32] prediction done
-BLEU: 0.09
-1-Gram BLEU: 0.47
-2-Gram BLEU: 0.17
-3-Gram BLEU: 0.06
-4-Gram BLEU: 0.02
-[29/32][1/21] prediction done | time : 0.09s
-[29/32][2/21] prediction done | time : 0.01s
+BLEU-1: 52.36
+BLEU-2: 33.90
+BLEU-3: 21.63
+BLEU-4: 13.65
+[29/32][1/21] prediction done | time : 0.08s
+[29/32][2/21] prediction done | time : 0.00s
 [29/32][3/21] prediction done | time : 0.01s
 [29/32][4/21] prediction done | time : 0.01s
 [29/32][5/21] prediction done | time : 0.01s
@@ -864,15 +770,14 @@ BLEU: 0.09
 [29/32][14/21] prediction done | time : 0.02s
 [29/32][15/21] prediction done | time : 0.02s
 [29/32][16/21] prediction done | time : 0.02s
-928
-928
-5
+[29/32][17/21] prediction done | time : 0.02s
+[29/32][18/21] prediction done | time : 0.02s
+[29/32][19/21] prediction done | time : 0.02s
 [29/32] prediction done
-BLEU: 0.09
-1-Gram BLEU: 0.47
-2-Gram BLEU: 0.17
-3-Gram BLEU: 0.06
-4-Gram BLEU: 0.02
+BLEU-1: 52.39
+BLEU-2: 33.93
+BLEU-3: 21.61
+BLEU-4: 13.59
 [30/32][1/30] prediction done | time : 0.08s
 [30/32][2/30] prediction done | time : 0.01s
 [30/32][3/30] prediction done | time : 0.01s
@@ -882,7 +787,7 @@ BLEU: 0.09
 [30/32][7/30] prediction done | time : 0.01s
 [30/32][8/30] prediction done | time : 0.01s
 [30/32][9/30] prediction done | time : 0.01s
-[30/32][10/30] prediction done | time : 0.02s
+[30/32][10/30] prediction done | time : 0.01s
 [30/32][11/30] prediction done | time : 0.02s
 [30/32][12/30] prediction done | time : 0.02s
 [30/32][13/30] prediction done | time : 0.02s
@@ -892,16 +797,17 @@ BLEU: 0.09
 [30/32][17/30] prediction done | time : 0.02s
 [30/32][18/30] prediction done | time : 0.02s
 [30/32][19/30] prediction done | time : 0.02s
-960
-960
-5
+[30/32][20/30] prediction done | time : 0.03s
+[30/32][21/30] prediction done | time : 0.03s
+[30/32][22/30] prediction done | time : 0.03s
+[30/32][23/30] prediction done | time : 0.03s
+[30/32][24/30] prediction done | time : 0.03s
 [30/32] prediction done
-BLEU: 0.09
-1-Gram BLEU: 0.47
-2-Gram BLEU: 0.17
-3-Gram BLEU: 0.06
-4-Gram BLEU: 0.02
-[31/32][1/24] prediction done | time : 0.07s
+BLEU-1: 52.33
+BLEU-2: 33.87
+BLEU-3: 21.57
+BLEU-4: 13.58
+[31/32][1/24] prediction done | time : 0.08s
 [31/32][2/24] prediction done | time : 0.00s
 [31/32][3/24] prediction done | time : 0.01s
 [31/32][4/24] prediction done | time : 0.01s
@@ -920,17 +826,11 @@ BLEU: 0.09
 [31/32][17/24] prediction done | time : 0.02s
 [31/32][18/24] prediction done | time : 0.02s
 [31/32][19/24] prediction done | time : 0.02s
-[31/32][20/24] prediction done | time : 0.02s
+[31/32][20/24] prediction done | time : 0.03s
 [31/32][21/24] prediction done | time : 0.03s
 [31/32][22/24] prediction done | time : 0.03s
-[31/32][23/24] prediction done | time : 0.03s
-[31/32][24/24] prediction done | time : 0.03s
-992
-992
-5
 [31/32] prediction done
-BLEU: 0.09
-1-Gram BLEU: 0.47
-2-Gram BLEU: 0.17
-3-Gram BLEU: 0.06
-4-Gram BLEU: 0.02
+BLEU-1: 52.21
+BLEU-2: 33.71
+BLEU-3: 21.36
+BLEU-4: 13.38

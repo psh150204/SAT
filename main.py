@@ -46,9 +46,6 @@ def main(args):
     attn_dim = 512
     embed_dim = 512
     regularize_constant = 1. # lambda * L => lambda = 1/L
-    
-    validation_term = 1
-    best_bleu = 0.
 
     vocabulary = torch.load(args.voca_path)
     vocab_size = len(vocabulary)
@@ -62,6 +59,11 @@ def main(args):
 
     if not args.test:
         # train
+        validation_term = 1
+        best_bleu = 0.
+        num_of_epochs_since_improvement = 0
+        early_stop_criterion = 20
+        
         train_loader = get_train_data_loader(args.path, args.token_path, args.voca_path, args.batch_size, pad_idx)
         valid_loader = get_test_data_loader(args.path, args.token_path, args.voca_path, args.batch_size, pad_idx, dataset_type = 'valid')
 
@@ -70,6 +72,13 @@ def main(args):
 
         print('Start training ...')
         for epoch in range(args.epochs):
+            
+            # early stopping
+            if num_of_epochs_since_improvement > early_stop_criterion :
+                print("There's no improvement on BLEU score while %d epochs"%(num_of_epochs_since_improvement))
+                print("Stop Training")
+                break
+
             start_epoch = time.time()
             i = 0
 
@@ -180,9 +189,13 @@ def main(args):
                 print(f'BLEU-4: {bleu_4:.2f}')
 
                 if bleu_1 > best_bleu :
+                    num_of_epochs_since_improvement = 0
+
                     best_bleu = bleu_1
                     print('Best BLEU-1 has been updated : %.2f'%(best_bleu))
                     save_checkpoint(decoder, 'checkpoints/best')
+                else :
+                    num_of_epochs_since_improvement += validation_term
             
             ################################################################################################################################################################
         print('End of the training')

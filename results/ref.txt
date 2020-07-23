@@ -5950,3 +5950,51 @@ __________________________________________________
 ['children', 'are', 'playing', 'in', 'and', 'around', 'a', 'garden', 'tube', 'in', 'the', 'front', 'yard', 'of', 'a', 'house']
 ['two', 'children', 'playing', 'above', 'a', 'blue', 'water', 'hose']
 __________________________________________________
+['a', 'brown', 'and', 'black', 'dog', 'on', 'a', 'leash', 'is', 'sniffed', 'by', 'a', 'black', 'and', 'white', 'dog']
+['a', 'dog', 'on', 'a', 'leash', 'walks', 'on', 'the', 'sidewalk', 'while', 'another', 'dog', 'follows']
+['a', 'small', 'dog', 'on', 'a', 'leash', 'is', 'being', 'smelled', 'by', 'another', 'animal']
+['the', 'black', 'and', 'white', 'dog', 'is', 'sniffing', 'the', 'butt', 'of', 'the', 'brown', 'dog', 'that', 'is', 'on', 'a', 'leash']
+['two', 'small', 'dogs', ',', 'one', 'black-and-white', 'and', 'one', 'brown-and-black', ',', 'walk', 'down', 'the', 'street']
+__________________________________________________
+['one', 'young', 'girl', 'pushing', 'a', 'toy', 'while', 'her', 'twin', 'sister', 'looks', 'on']
+['two', 'children', 'wearing', 'bright', 'pink', 'clothes', 'are', 'playing', 'with', 'a', 'toy', 'lawnmower']
+['two', 'girls', 'are', 'dressed', 'the', 'same', 'and', 'one', 'of', 'them', 'is', 'playing', 'with', 'a', 'toy', 'lawnmower']
+['two', 'little', 'girls', 'stand', 'against', 'a', 'wall', ',', 'one', 'girl', 'has', 'a', 'happy', 'face', 'and', 'the', 'other', 'girl', 'has', 'a', 'sad', 'face']
+['two', 'twin', 'girls', 'playing', 'with', 'a', 'toy', 'in', 'the', 'driveway']
+__________________________________________________
+['a', 'dog', 'leaps', 'out', 'of', 'the', 'water']
+['a', 'small', 'dog', 'jumping', 'threw', 'some', 'a', 'lake']
+['a', 'tan', 'dog', 'jumps', 'into', 'water']
+['a', 'white', 'dog', 'is', 'splashing', 'through', 'the', 'water']
+['dog', 'jumping', 'out', 'of', 'water', 'in', 'a', 'lake']
+__________________________________________________
+['a', 'beagle', 'is', 'playing', 'with', 'a', 'tennis', 'ball']
+['a', 'puppy', 'dog', 'is', 'playing', 'with', 'a', 'tennis', 'ball']
+['a', 'puppy', 'is', 'playing', 'with', 'a', 'tennis', 'ball', 'on', 'a', 'well-kept', 'path', 'lined', 'with', 'groomed', 'bushes']
+['a', 'puppy', 'plays', 'with', 'a', 'tennis', 'ball', 'on', 'a', 'stone', 'path']
+['a', 'white-footed', 'beagle', 'plays', 'with', 'a', 'tennis', 'ball', 'on', 'a', 'garden', 'path']
+__________________________________________________
+['a', 'man', 'in', 'red', 'swim', 'trunks', 'is', 'jumping', 'onto', 'a', 'bodyboard']
+['a', 'man', 'in', 'red', 'trunks', 'flies', 'through', 'the', 'air', 'with', 'a', 'boogie', 'board']
+['a', 'man', 'with', 'a', 'wake-board', 'is', 'diving', 'over', 'a', 'surface', 'that', 'is', 'not', 'water']
+['a', 'shirtless', 'man', 'bodysurfs']
+['man', 'is', 'diving', 'onto', 'his', 'wakeboard']
+__________________________________________________
+['a', 'boy', 'jumping', 'off', 'of', 'a', 'dock', 'while', 'his', 'friend', 'watches']
+['two', 'boys', 'are', 'climbing', 'a', 'wooden', 'platform', 'and', 'jumping', 'into', 'a', 'river']
+['two', 'boys', 'jumping', 'off', 'the', 'pier', 'into', 'the', 'water']
+['two', 'boys', 'preparing', 'to', 'jump', 'off', 'a', 'pier', 'located', 'on', 'a', 'large', 'body', 'of', 'water']
+['two', 'children', 'jump', 'off', 'the', 'dock', 'into', 'the', 'lake']
+__________________________________________________
+['a', 'group', 'of', 'six', 'children', 'sit', 'at', 'a', 'wooden', 'table']
+['a', 'group', 'of', 'young', 'asian', 'children', 'pose', 'for', 'a', 'picture', 'at', 'a', 'table']
+['six', 'children', ',', 'all', 'with', 'black', 'hair', ',', 'sit', 'at', 'a', 'table', 'for', 'a', 'picture']
+['six', 'children', 'at', 'a', 'table']
+['six', 'small', 'children', 'sitting', 'at', 'a', 'desk']
+__________________________________________________
+['a', 'man', 'in', 'a', 'pink', 'shirt', 'climbs', 'a', 'rock', 'face']
+['a', 'man', 'is', 'rock', 'climbing', 'high', 'in', 'the', 'air']
+['a', 'person', 'in', 'a', 'red', 'shirt', 'climbing', 'up', 'a', 'rock', 'face', 'covered', 'in', 'assist', 'handles']
+['a', 'rock', 'climber', 'in', 'a', 'red', 'shirt']
+['a', 'rock', 'climber', 'practices', 'on', 'a', 'rock', 'climbing', 'wall']
+__________________________________________________
