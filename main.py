@@ -196,6 +196,7 @@ def main(args):
                     save_checkpoint(decoder, 'checkpoints/best')
                 else :
                     num_of_epochs_since_improvement += validation_term
+                    print("There's no improvement on BLEU score while %d epochs"%(num_of_epochs_since_improvement))
             
             ################################################################################################################################################################
         print('End of the training')
