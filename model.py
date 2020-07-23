@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import numpy as np
 
 from torchvision.models import vgg19
 
@@ -54,7 +55,7 @@ class Decoder(nn.Module):
         # doubly stochastic attention
         self.f_beta = nn.Linear(h_dim, a_dim)
 
-    def forward(self, a, trg):
+    def forward(self, a, trg, tf_rate = 0.5):
         # param a : encoder output (a tensor with size [batch, L, a_dim])
         # param trg : target caption (a tensor with size [batch, C])
         max_caption_len = trg.size(1)
@@ -91,6 +92,9 @@ class Decoder(nn.Module):
             
             # next word
             if t < max_caption_len - 1:
-                y_t = trg[:,t+1:t+2] # teacher forcing
+                if np.random.uniform() < tf_rate :
+                    y_t = trg[:,t+1:t+2] # teacher forcing
+                else:
+                    y_t = torch.argmax(F.softmax(prob, dim = -1), dim = -1).unsqueeze(1) # [batch, 1]
         
         return pred, alpha # [batch, C, vocab_size], [batch, C, L]
