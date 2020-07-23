@@ -87,8 +87,8 @@ def main(args):
                 loss = criterion(preds.view(-1, preds.size(-1)), trg_output) # NLL loss
                 regularize_term = regularize_constant * ((1. - torch.sum(alphas, dim = 1)) ** 2).mean()
                 
-                loss += regularize_term
-                loss.backward()
+                total_loss = loss + regularize_term
+                total_loss.backward()
 
                 optimizer.step()
 
@@ -99,7 +99,7 @@ def main(args):
                     torch.cuda.empty_cache()
 
                 batch_time = time.time() - batch_start
-                print('[%d/%d][%d/%d] train loss : %.4f | time : %.2fs'%(epoch+1, args.epochs, i, train_loader.size//args.batch_size + 1, loss.item(), batch_time))
+                print('[%d/%d][%d/%d] train loss : %.4f (%.4f / %.4f) | time : %.2fs'%(epoch+1, args.epochs, i, train_loader.size//args.batch_size + 1, total_loss.item(), loss.item(), regularize_term.item(), batch_time))
                 
             epoch_time = time.time() - start_epoch
             print('Time taken for %d epoch : %.2fs'%(epoch+1, epoch_time))
