@@ -3,13 +3,13 @@ import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
 
-from torchvision.models import vgg19
+from torchvision.models import vgg19_bn
 
 
 class Encoder(nn.Module):
     def __init__(self):
         super(Encoder, self).__init__()
-        self.VGGnet = vgg19(pretrained=True)
+        self.VGGnet = vgg19_bn(pretrained=True)
         self.VGGnet = nn.Sequential(*list(self.VGGnet.features.children())[:-1])
 
     def forward(self, x):
