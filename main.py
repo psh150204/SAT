@@ -2,9 +2,10 @@ import os
 import argparse
 import time
 
-from dataloader import get_data_loader
+from dataloader import get_train_data_loader, get_test_data_loader
 from utils import seq2sen
 from model import Encoder, Decoder
+from nltk.translate.bleu_score import corpus_bleu
 
 import numpy as np
 import torch
@@ -44,20 +45,22 @@ def main(args):
     h_dim = 512
     attn_dim = 512
     embed_dim = 512
-    regularize_constant = 1. # lambda * L
+    regularize_constant = 1. # lambda * L => lambda = 1/L
 
     vocabulary = torch.load(args.voca_path)
     vocab_size = len(vocabulary)
     
     device = torch.device("cuda" if(torch.cuda.is_available()) else "cpu")
+    encoder = Encoder().to(device)
+    decoder = Decoder(a_dim, h_dim, attn_dim, vocab_size, embed_dim).to(device)
+
+    # We do not train the encoder
+    encoder.eval()
 
     if not args.test:
         # train
-        train_loader = get_data_loader(args.path, 'train', args.token_path, args.voca_path, args.batch_size, pad_idx)
-        valid_loader = get_data_loader(args.path, 'valid', args.token_path, args.voca_path, args.batch_size, pad_idx)
-
-        encoder = Encoder().to(device)
-        decoder = Decoder(a_dim, h_dim, attn_dim, vocab_size, embed_dim).to(device)
+        train_loader = get_train_data_loader(args.path, args.token_path, args.voca_path, args.batch_size, pad_idx)
+        valid_loader = get_test_data_loader(args.path, args.token_path, args.voca_path, args.batch_size, pad_idx, dataset_type = 'valid')
 
         criterion = nn.CrossEntropyLoss(ignore_index = pad_idx)
         optimizer = torch.optim.Adam(decoder.parameters(), lr = 0.0001)
@@ -96,27 +99,28 @@ def main(args):
                     torch.cuda.empty_cache()
 
                 batch_time = time.time() - batch_start
-                print('[%d/%d][%d/%d] train loss : %.4f | time : %.2fs'%(epoch+1, 100, i, train_loader.size//args.batch_size + 1, loss.item(), batch_time))
+                print('[%d/%d][%d/%d] train loss : %.4f | time : %.2fs'%(epoch+1, args.epochs, i, train_loader.size//args.batch_size + 1, loss.item(), batch_time))
                 
             epoch_time = time.time() - start_epoch
             print('Time taken for %d epoch : %.2fs'%(epoch+1, epoch_time))
 
-            save_checkpoint(decoder, 'checkpoints/epoch_%d_'%(epoch+1))
+            save_checkpoint(decoder, 'checkpoints/epoch_%d'%(epoch+1))
 
         print('End of the training')
         save_checkpoint(decoder, 'checkpoints/final')
     else:
         if os.path.exists(args.checkpoint):
-            model_checkpoint = torch.load(args.checkpoint)
-            model.load_state_dict(model_checkpoint['state_dict'])
-            print("trained model " + args.checkpoint + "is loaded")
+            decoder_checkpoint = torch.load(args.checkpoint)
+            decoder.load_state_dict(decoder_checkpoint['state_dict'])
+            print("trained decoder " + args.checkpoint + "is loaded")
+
+        decoder.eval()
 
         # test
-        test_loader = get_data_loader(args.path, 'test', args.token_path, args.voca_path, args.batch_size, pad_idx)
-        vocabulary = torch.load(args.voca_path)
+        test_loader = get_test_data_loader(args.path, args.token_path, args.voca_path, args.batch_size, pad_idx)
 
-        j = 0
-        pred = []
+        j = 1
+        pred, ref = [], []
         for src_batch, trg_batch in test_loader:
             # predict pred_batch from src_batch with your model.
             # every sentences in pred_batch should start with <sos> token (index: 0) and end with <eos> token (index: 1).
@@ -126,21 +130,28 @@ def main(args):
             #  [0, 4, 9, 1, 2],
             #  [0, 6, 1, 2, 2]]
 
-            src_batch = torch.tensor(src_batch).to(device)
-            trg_batch = torch.tensor(trg_batch).to(device)
+            src_batch = src_batch.to(device) # [batch, 3, 244, 244]
+            trg_batch = torch.tensor(trg_batch).to(device) # [batch * 5, C]
+            trg_batch = torch.split(trg_batch, 5)
             
-            max_length = trg_batch.size(1)
+            batches = []
+            for i in range(args.batch_size):
+                batches.append(trg_batch[i].unsqueeze(0))
+            
+            trg_batch = torch.cat(batches, dim = 0) # [batch, 5, C]
+            
+            max_length = trg_batch.size(-1)
             
             pred_batch = torch.zeros(args.batch_size, 1, dtype = int).to(device) # [batch, 1] = [[0],[0],...,[0]]
             
             # eos_mask[i] = 1 means i-th sentence has eos
             eos_mask = torch.zeros(args.batch_size, dtype = int)
             
-            h = listener(src_batch)
+            a = encoder(src_batch)
             
             for k in range(max_length):
                 start = time.time()
-                output = speller(pred_batch, h) # [batch, k+1, num_class]
+                output, _ = decoder(a, pred_batch) # [batch, k+1, vocab_size]
 
                 # greedy search
                 output = torch.argmax(F.softmax(output, dim = -1), dim = -1) # [batch_size, k+1]
@@ -157,23 +168,40 @@ def main(args):
                     
                 t = time.time() - start
                 print("[%d/%d][%d/%d] prediction done | time : %.2fs"%(j, test_loader.size // args.batch_size + 1, k+1, max_length, t))
-            j += 1
 
             # flush the GPU cache
             if torch.cuda.is_available():
                 torch.cuda.empty_cache()
 
-            print("[%d/%d] prediction done"%(j, test_loader.size // args.batch_size + 1))
             pred += seq2sen(pred_batch.cpu().numpy().tolist(), vocabulary)
-            ref += seq2sen(trg_batch.cpu().numpy().tolist(), vocabulary)
+            for i in range(args.batch_size):
+                ref += [seq2sen(trg_batch[i].cpu().numpy().tolist(), vocabulary)]
+            
+            print("[%d/%d] prediction done"%(j, test_loader.size // args.batch_size + 1))
 
-        with open('results/pred.txt', 'w') as f:
-            for line in pred:
-                f.write('{}\n'.format(line))
+            bleu = corpus_bleu(ref, pred)
+            bleu_1gram = corpus_bleu(ref, pred, weights = (1,0,0,0))
+            bleu_2gram = corpus_bleu(ref, pred, weights = (0,1,0,0))
+            bleu_3gram = corpus_bleu(ref, pred, weights = (0,0,1,0))
+            bleu_4gram = corpus_bleu(ref, pred, weights = (0,0,0,1))
 
-        with open('results/ref.txt', 'w') as f:
-            for line in ref:
-                f.write('{}\n'.format(line))
+            print(f'BLEU: {bleu:.2f}')
+            print(f'1-Gram BLEU: {bleu_1gram:.2f}')
+            print(f'2-Gram BLEU: {bleu_2gram:.2f}')
+            print(f'3-Gram BLEU: {bleu_3gram:.2f}')
+            print(f'4-Gram BLEU: {bleu_4gram:.2f}')
+            
+            j += 1
+
+            with open('results/pred.txt', 'w') as f:
+                for line in pred:
+                    f.write('{}\n'.format(line))
+
+            with open('results/ref.txt', 'w') as f:
+                for lines in ref:
+                    for line in lines:
+                        f.write('{}\n'.format(line))
+                    f.write('_'*50 + '\n')
 
 
 if __name__ == '__main__':
@@ -196,7 +224,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '--epochs',
         type=int,
-        default=100)
+        default=200)
 
     parser.add_argument(
         '--batch_size',

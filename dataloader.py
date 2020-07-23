@@ -26,7 +26,7 @@ class Flickr8k_Dataset(torch.utils.data.Dataset):
         caption_idx = np.random.randint(5)
         if idx_type == "<class 'int'>":
             image, _, path = self.data[idx] # image : [3, 224, 224]
-            x = image.unsqueeze(0).repeat(5, 1, 1, 1) # [5, 3, 244, 244]
+            x = image # [3, 244, 244]
             y = [sen2seq(self.voca, x[1:], 0, 1) for x in self.trg if path.split('/')[3] in x[0]]
 
         elif idx_type == "<class 'slice'>":
@@ -35,14 +35,14 @@ class Flickr8k_Dataset(torch.utils.data.Dataset):
             for i in range(*idx.indices(len(self.data))):
                 image, _, path = self.data[i] # image : [3, 224, 224]
                 if x is None:
-                    x = image.unsqueeze(0).repeat(5, 1, 1, 1) # [5, 3, 244, 244]
-                    y = [sen2seq(self.voca, x[1:]) for x in self.trg if path.split('/')[3] in x[0]]
+                    x = image.unsqueeze(0) # [1, 3, 244, 244]
+                    y = [sen2seq(self.voca, x[1:]) for x in self.trg if path.split('/')[3] in x[0]] # [1, 5, caption length]
                 else:
-                    next_x = image.unsqueeze(0).repeat(5, 1, 1, 1)
-                    next_y = [sen2seq(self.voca, x[1:]) for x in self.trg if path.split('/')[3] in x[0]]
+                    next_x = image.unsqueeze(0) # [1, 3, 244, 244]
+                    next_y = [sen2seq(self.voca, x[1:]) for x in self.trg if path.split('/')[3] in x[0]] # [5, caption length]
 
-                    x = torch.cat([x, next_x], dim = 0) # [5 * (i+1), 3, 244, 244]
-                    y += next_y
+                    x = torch.cat([x, next_x], dim = 0) # [(i+1), 3, 244, 244]
+                    y += next_y # [(i+1)*5, caption_lengths]
         else:
             raise TypeError('Not compatible type')
 
@@ -116,7 +116,52 @@ class DataLoader:
 
         return src_batch, trg_batch
 
-def get_data_loader(data_root, dataset_type, token_path, voca_path, batch_size, pad_idx):
+def get_train_data_loader(data_root, token_path, voca_path, batch_size, pad_idx):
+
+    # load tokens
+    if not os.path.exists(token_path):
+        tokens = []
+        with open(data_root + 'Flickr8k.token.txt', 'r') as reader:
+            for line in reader:
+                token = line.split()
+                if '.' in token :
+                    token.remove('.')
+                tokens.append(token)
+        torch.save(tokens, 'preprocessed_data/tokens')
+    else:
+        print('tokens are loaded from ' + token_path)
+        tokens = torch.load(token_path)
+
+    # load vocabulary
+    if not os.path.exists(voca_path):
+        vocabulary = {'<sos>' : 0, '<eos>' : 1, '<pad>' : 2}
+        idx = 3
+
+        for token in tokens:
+            for word in token[1:]:
+                word = word.lower()
+                if word not in vocabulary:
+                    vocabulary[word] = idx
+                    idx += 1
+
+        torch.save(vocabulary, 'preprocessed_data/vocabulary')
+    else:
+        vocabulary = torch.load(voca_path)
+        print('vocabulary is loaded from ' + voca_path)
+
+    data = ImageFolder(root=data_root + 'train',
+                            transform=transforms.Compose([
+                                transforms.Resize(224),
+                                transforms.CenterCrop(224),
+                                transforms.ToTensor(),
+                                transforms.Normalize((0.5, 0.5, 0.5),
+                                                    (0.5, 0.5, 0.5))]))
+    
+    dataset = Flickr8k_Dataset_with_Random_Sampling(data, tokens, vocabulary)
+
+    return DataLoader(dataset, batch_size, pad_idx)
+
+def get_test_data_loader(data_root, token_path, voca_path, batch_size, pad_idx, dataset_type = 'test'):
 
     # load tokens
     if not os.path.exists(token_path):
@@ -157,6 +202,6 @@ def get_data_loader(data_root, dataset_type, token_path, voca_path, batch_size, 
                                 transforms.Normalize((0.5, 0.5, 0.5),
                                                     (0.5, 0.5, 0.5))]))
     
-    dataset = Flickr8k_Dataset_with_Random_Sampling(data, tokens, vocabulary)
+    dataset = Flickr8k_Dataset(data, tokens, vocabulary)
 
     return DataLoader(dataset, batch_size, pad_idx)
