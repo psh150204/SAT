@@ -6,6 +6,10 @@ PyTorch implementation of the paper 'Show, Attend and Tell'
 * Dataset: Flickr8k
 * Features: Model, Framework agnostic
 
+### Results
+* predictions / references : results/...
+![result][results/result.png]
+
 ### References
 [1] Xu, K., Ba, J., Kiros, R., Cho, K., Courville, A., Salakhudinov, R., ... & Bengio, Y. (2015, June). Show, attend and tell: Neural image caption generation with visual attention. In International conference on machine learning (pp. 2048-2057).
 
