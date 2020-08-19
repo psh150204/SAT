@@ -1,6 +1,6 @@
 # Show, Attend and Tell (SAT)
 
-PyTorch implementation of the paper 'Show, Attend and Tell'
+PyTorch implementation of the paper 'Show, Attend and Tell' (ICML 2015)
 
 * Requirements: Python 3, PyTorch
 * Dataset: Flickr8k
